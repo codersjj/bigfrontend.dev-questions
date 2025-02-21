@@ -32,7 +32,8 @@ function curry(fn) {
         res.push(argsFrom[indexFrom])
         indexFrom++
       } else {
-        res[indexTo] = argsTo[indexTo]
+        // res[indexTo] = argsTo[indexTo]
+        res.push(argsTo[indexTo])
       }
       indexTo++
     }
