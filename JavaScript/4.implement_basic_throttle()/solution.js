@@ -12,12 +12,12 @@ function throttle(func, wait) {
 
   const startCooling = () => {
     timer = setTimeout(() => {
+      timer = null
       if (stashed) {
         func.apply(stashed[0], stashed[1])
         stashed = null
         startCooling()
       }
-      timer = null
     }, wait)
   }
 
