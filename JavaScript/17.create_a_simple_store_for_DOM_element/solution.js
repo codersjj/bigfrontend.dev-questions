@@ -110,3 +110,37 @@ class NodeStore {
     return node[this.NODE_KEY] >= 0
   }
 }
+
+// or:
+
+class NodeStore {
+  // [[node, value]]
+  nodeList = []
+  static NODE_KEY = '__index'
+
+   /**
+   * @param {Node} node
+   * @param {any} value
+   */
+  set(node, value) {
+    if (!(this.NODE_KEY in node)) {
+      node[this.NODE_KEY] = this.nodeList.length
+    }
+    this.nodeList[node[this.NODE_KEY]] = [node, value]
+  }
+  /**
+   * @param {Node} node
+   * @return {any}
+   */
+  get(node) {
+    return this.nodeList[node[this.NODE_KEY]]?.[1]
+  }
+  
+  /**
+   * @param {Node} node
+   * @return {Boolean}
+   */
+  has(node) {
+    return this.NODE_KEY in node
+  }
+}
