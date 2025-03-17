@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const originalArr = [,undefined,,]
+    const newArr = []
+
+    const arr = originalArr.map((item) => {
+      if (
+        typeof item === 'undefined' ||
+        typeof item === 'function' ||
+        typeof item === 'symbol'
+      ) {
+        return 'null'
+      }
+      return 666
+    });
+    console.log('using map:', arr, 'stringify:', `[${arr.join()}]`)
+
+    for (const item of originalArr) {
+      if (
+        typeof item === 'undefined' ||
+        typeof item === 'function' ||
+        typeof item === 'symbol'
+      ) {
+        newArr.push('null')
+      } else {
+        newArr.push(666)
+      }
+    }
+    console.log('using for...of:', newArr, 'stringify:', `[${newArr.join()}]`)
+
+    console.log('JSON.stringify():', JSON.stringify(originalArr))
+
+
+    const map = new Map([['a', '123']])
+    map.a = 'a'
+    map.b = 'b'
+    console.log(map)
+    console.log(Object.entries(map))
+
+    console.log(Reflect.ownKeys(map))
+
+    ;const res = (() => {
+      try {
+        // 处理对象或数组
+        console.log('try block')
+        return 666
+      } finally {
+        console.log('finally~')
+      }
+    })()
+
+    console.log('res', res)
+  </script>
+</body>
+</html>
