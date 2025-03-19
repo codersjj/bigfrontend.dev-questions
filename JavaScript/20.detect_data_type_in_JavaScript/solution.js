@@ -13,3 +13,14 @@ function detectType(data) {
   }
   throw new Error('unexpected data type')
 }
+
+// or:
+
+/**
+ * @param {any} data
+ * @return {string}
+ */
+function detectType(data) {
+  // your code here
+  return Object.prototype.toString.call(data).slice(1, -1).split(' ')[1].toLowerCase()
+}
