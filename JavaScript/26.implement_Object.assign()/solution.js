@@ -53,6 +53,19 @@ function objectAssign(target, ...sources) {
  */
 function objectAssign(target, ...sources) {
   // your code here
+
+  /*
+    1. copy `enumerable` `own property` key from sources to target
+      (1). string keys
+      (2). symbol keys
+    2. exceptions
+      (1). if target is nullish(null/undefined), throw an error(Cannot convert null or undefined to object)
+      (2). if assignment of a property on the target fails(such as the property is non-writable on the target), throw an error()
+        using Reflect.set()
+    3. if target is primitive value, convert target to an object
+    4. if source is null or undefined, it will be ignored.
+  */
+ 
   if (target === undefined || target === null) throw new Error('Cannot convert undefined or null to object')
   
   // if (['string', 'number', 'boolean', 'symbol', 'bigint'].includes(typeof target)) {
@@ -64,7 +77,7 @@ function objectAssign(target, ...sources) {
     if (source === null || source === undefined) continue
 
     const keys = [
-      ...Object.keys(source),
+      ...Object.keys(source), // own enumerable string-keyed property
       ...Object.getOwnPropertySymbols(source)
         .filter(sKey => Object.getOwnPropertyDescriptor(source, sKey).enumerable)
     ]
