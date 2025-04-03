@@ -53,6 +53,47 @@ function all(promises) {
  */
 function all(promises) {
   // your code here
+  return new Promise((resolve, reject) => {
+    if (!promises.length) {
+      resolve([])
+      return
+    }
+
+    const results = []
+    let resolvedCount = 0
+    let isRejected = false
+    
+    for (let i = 0; i < promises.length; i++) {
+      const promise = Promise.resolve(promises[i])
+
+      promise
+        .then(res => {
+          if (isRejected) return
+
+          results[i] = res
+          resolvedCount++
+          if (resolvedCount === promises.length) {
+            resolve(results)
+          }
+        })
+        .catch(error => {
+          if (isRejected) return
+          
+          isRejected = true
+          reject(error)
+        })
+    }
+  })
+}
+
+// or:
+
+/**
+ * @param {Array<any>} promises - notice input might have non-Promises
+ * @return {Promise<any[]>}
+ */
+function all(promises) {
+  // your code here
   // handle sparse array by Array.from()
   // [empty X 3, 'aaa']: Array.from([,,, 'aaa']) => [undefined, undefined, undefined, 'aaa']
   promises = Array.from(promises).map(p => Promise.resolve(p))
