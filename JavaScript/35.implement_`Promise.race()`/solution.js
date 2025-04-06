@@ -23,3 +23,30 @@ function race(promises) {
     })
   })
 }
+
+// or:
+
+/**
+ * @param {Array<Promise>} promises
+ * @return {Promise}
+ */
+function race(promises) {
+  // your code here
+  return new Promise((resolve, reject) => {
+    promises.forEach(p => p.then(res => resolve(res)).catch(err => reject(err)))
+  })
+}
+
+// or:
+
+/**
+ * @param {Array<Promise>} promises
+ * @return {Promise}
+ */
+function race(promises) {
+  // your code here
+  return new Promise((resolve, reject) => {
+    // promises.forEach(p => p.then(res => resolve(res), err => reject(err)))
+    promises.forEach(p => p.then(resolve, reject))
+  })
+}
